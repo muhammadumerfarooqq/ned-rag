@@ -24,4 +24,4 @@
 1. **Chunking** — `src/chunker.py` splits the regulations PDF into ~1000-char overlapping chunks.
 2. **Embedding + indexing** — `src/build_index.py` embeds chunks with all-MiniLM-L6-v2 (384-d) into a persistent ChromaDB index.
 3. **Retrieval** — `src/retriever.py` returns the top-k (k=3) most relevant chunks via cosine similarity.
-4. **Grounded generation** — `src/rag.py` passes retrieved chunks to Gemini (gemini-3.1-flash-lite) with a strict grounding prompt: answers cite the source clause, and out-of-scope questions return an honest "I don't know" instead of hallucinating.
+4. **Grounded generation** — `src/rag.py` passes retrieved chunks to Gemini (gemini-3.1-flash-lite) with a strict grounding prompt: answers cite the source clause, and out-of-scope questions return an honest "I don't know" instead of hallucinating....
