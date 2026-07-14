@@ -5,10 +5,9 @@ academic regulations in plain English — pulling answers **only** from the offi
 documents and citing the exact source clause as proof.
 
 Built so a student can ask "What attendance do I need to sit an exam?" and get a correct,
-sourced answer in seconds — instead of digging through a  regulations PDF or asking
-seniors.
+sourced answer in seconds — instead of digging through a regulations PDF or asking seniors.
 
-**Status:** 🚧 In progress — Phase 6 complete (web UI). Docker + deployment next.
+**Status:** 🚧 In progress — Phase 7 complete (Dockerized, runs as a self-contained image). Deployment next.
 
 ## Why this project is different
 Most "chat with a PDF" clones never leave localhost and are never measured. This one is
@@ -35,6 +34,7 @@ Python · sentence-transformers · ChromaDB · Google Gemini API · FastAPI · G
 ## Security
 - API key stored in a git-ignored `.env`, loaded via environment variables — never committed.
 - Code references the key by name (`os.getenv`), so the repository is safe to make public.
+- The key is **not** baked into the Docker image — embeddings run locally at build time and need no key. Verified: `docker run --rm ned-rag python -c "import os; print(os.getenv('GEMINI_API_KEY'))"` prints `None`. The key is injected only at runtime.
 
 ## Running locally
 ```bash
@@ -44,4 +44,14 @@ pip install -r requirements.txt
 python src/build_index.py    # builds the vector index (one time)
 uvicorn api:app --app-dir src
 # open http://127.0.0.1:8000/docs
+```
+
+## Running with Docker
+The image bundles the code and the pre-built vector index (baked in at build time, so the
+container starts ready — no re-embedding on startup). The Gemini key is passed in at runtime
+and is never stored in the image.
+```bash
+docker build -t ned-rag .
+docker run -p 7860:7860 --env-file .env ned-rag
+# open http://localhost:7860
 ```
