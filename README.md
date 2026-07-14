@@ -8,7 +8,7 @@ Built so a student can ask "What attendance do I need to sit an exam?" and get a
 sourced answer in seconds — instead of digging through a  regulations PDF or asking
 seniors.
 
-**Status:** 🚧 In progress — Phase 5 complete (REST API). Deployment and evaluation in progress.
+**Status:** 🚧 In progress — Phase 6 complete (web UI). Docker + deployment next.
 
 ## Why this project is different
 Most "chat with a PDF" clones never leave localhost and are never measured. This one is
@@ -24,6 +24,7 @@ built to:
 3. **Retrieval** — `src/retriever.py` returns the top-k (k=3) most relevant chunks for a question via cosine similarity.
 4. **Grounded generation** — `src/rag.py` passes retrieved chunks to Gemini (`gemini-3.1-flash-lite`) with a strict grounding prompt: answers cite the source clause, and out-of-scope questions return an honest "I don't know" instead of hallucinating.
 5. **API** — `src/api.py` wraps the pipeline in a FastAPI service: `POST /query` returns a grounded answer as JSON, `GET /health` for status. Input validation via Pydantic; errors handled without leaking internals.
+6. **UI** — `src/app.py` serves a themed Gradio web interface (in-process, calling the RAG pipeline directly) so users can ask questions in plain English and see cited answers.
 
 ## Tech stack
 Python · sentence-transformers · ChromaDB · Google Gemini API · FastAPI · Gradio (UI) · Docker · Render · Weights & Biases (evaluation)
