@@ -5,7 +5,7 @@ academic regulations in plain English — pulling answers **only** from the offi
 documents and citing the exact source clause as proof.
 
 Built so a student can ask "What attendance do I need to sit an exam?" and get a correct,
-sourced answer in seconds — instead of digging through a 12-page regulations PDF or asking
+sourced answer in seconds — instead of digging through a  regulations PDF or asking
 seniors.
 
 **Status:** 🚧 In progress — Phase 5 complete (REST API). Deployment and evaluation in progress.
