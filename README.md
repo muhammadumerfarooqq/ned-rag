@@ -7,7 +7,7 @@ documents and citing the exact source clause as proof.
 Built so a student can ask "What attendance do I need to sit an exam?" and get a correct,
 sourced answer in seconds — instead of digging through a regulations PDF or asking seniors.
 
-**Status:** 🚧 In progress — Phase 7 complete (Dockerized, runs as a self-contained image). Deployment next.
+**Status:** ✅ Live at [https://ned-rag.onrender.com](https://ned-rag.onrender.com) — Phase 8 complete (deployed). Note: free tier sleeps after 15 min; first request may take 50-90s to wake.
 
 ## Why this project is different
 Most "chat with a PDF" clones never leave localhost and are never measured. This one is
