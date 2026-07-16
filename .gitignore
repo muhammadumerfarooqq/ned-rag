@@ -183,3 +183,6 @@ cython_debug/
 
 chroma_db/
 .env
+
+wandb/
+chunks_dump.txt

@@ -1,0 +1,170 @@
+[
+  {
+    "id": "q1",
+    "question": "What attendance do I need to sit an exam?",
+    "gold_snippet": "attendance is at least 75% during the semester",
+    "type": "in_scope"
+  },
+  {
+    "id": "q2",
+    "question": "How is CGPA calculated?",
+    "gold_snippet": "Grade Point Average (GPA) for any semester",
+    "type": "in_scope"
+  },
+  {
+    "id": "q3",
+    "question": "When can I apply for COD under relegation?",
+    "gold_snippet": "allowed in Second Year Fall Semester",
+    "type": "in_scope"
+  },
+  {
+    "id": "q4",
+    "question": "What grade point is a B?",
+    "gold_snippet": "Grade / Grade Point equated with percentage of marks",
+    "type": "in_scope"
+  },
+  {
+    "id": "q5",
+    "question": "When am I placed on probation?",
+    "gold_snippet": "remain on probation during First Year Spring Semester",
+    "type": "in_scope"
+  },
+  {
+    "id": "q6",
+    "question": "What is the maximum credit hours I can register in a semester?",
+    "gold_snippet": "shall be allowed to register in maximum of Twenty-",
+    "type": "in_scope"
+  },
+  {
+    "id": "q7",
+    "question": "What is the deadline to withdraw from a course?",
+    "gold_snippet": "No request for withdrawal shall be accepted after 8th week",
+    "type": "in_scope"
+  },
+  {
+    "id": "q8",
+    "question": "What CGPA do I need to get my degree?",
+    "gold_snippet": "Any student who was admitted in First Year and has passed all courses",
+    "type": "in_scope"
+  },
+  {
+    "id": "q9",
+    "question": "How many years do I have to finish my degree?",
+    "gold_snippet": "Maximum seven academic years shall be allowed for each Four-year degree programme",
+    "type": "in_scope"
+  },
+  {
+    "id": "q10",
+    "question": "How long is a semester?",
+    "gold_snippet": "shall comprise of minimum 15 weeks of",
+    "type": "in_scope"
+  },
+  {
+    "id": "q11",
+    "question": "When does course registration open?",
+    "gold_snippet": "Registration in any Semester shall be allowed only during first three weeks after",
+    "type": "in_scope"
+  },
+  {
+    "id": "q12",
+    "question": "How are marks split between final exam and sessional?",
+    "gold_snippet": "60% marks for final examination and 40% marks for sessional evaluation",
+    "type": "in_scope"
+  },
+  {
+    "id": "q13",
+    "question": "What marks do I need in the entry test?",
+    "gold_snippet": "at least 50% marks with subject of Physics",
+    "type": "in_scope"
+  },
+  {
+    "id": "q14",
+    "question": "What HSC percentage do I need for BS Computer Science?",
+    "gold_snippet": "at least 60% marks in aggregate for admission",
+    "type": "in_scope"
+  },
+  {
+    "id": "q15",
+    "question": "When is a W grade given?",
+    "gold_snippet": "awarded on official withdrawal from the Semester or Programme",
+    "type": "in_scope"
+  },
+  {
+    "id": "q16",
+    "question": "Am I eligible for the Final Year Design Project?",
+    "gold_snippet": "completed/passed a minimum of 80% courses up to 3rd year",
+    "type": "in_scope"
+  },
+  {
+    "id": "q17",
+    "question": "Can I get exemption for courses studied abroad?",
+    "gold_snippet": "Courses studied abroad are having more than 75% equivalency",
+    "type": "in_scope"
+  },
+  {
+    "id": "q18",
+    "question": "In which year is migration to NED allowed?",
+    "gold_snippet": "Migration will be restricted to only Second Year of study",
+    "type": "in_scope"
+  },
+  {
+    "id": "q19",
+    "question": "What attendance do I need to withdraw from a semester?",
+    "gold_snippet": "maintained at least 50% attendance",
+    "type": "in_scope"
+  },
+  {
+    "id": "q20",
+    "question": "How many total credit hours are needed for the degree?",
+    "gold_snippet": "be at least 124",
+    "type": "in_scope"
+  },
+  {
+    "id": "q21",
+    "question": "If I repeat a course, which grade counts?",
+    "gold_snippet": "Better grades in course(s) shall be considered for determining his/her GPA/CGPA",
+    "type": "in_scope"
+  },
+  {
+    "id": "q22",
+    "question": "What does the P grade mean?",
+    "gold_snippet": "Pass in non-credit",
+    "type": "in_scope"
+  },
+  {
+    "id": "q23",
+    "question": "How many courses can I register in the summer session?",
+    "gold_snippet": "students will not be allowed to register in FYDP in Summer session",
+    "type": "in_scope"
+  },
+  {
+    "id": "q24",
+    "question": "Who founded NED University?",
+    "gold_snippet": null,
+    "type": "out_of_scope"
+  },
+  {
+    "id": "q25",
+    "question": "Who is the current Vice Chancellor of NED?",
+    "gold_snippet": null,
+    "type": "out_of_scope"
+  },
+  {
+    "id": "q26",
+    "question": "How do I apply for a hostel room?",
+    "gold_snippet": null,
+    "type": "out_of_scope"
+  },
+  {
+    "id": "q27",
+    "question": "What is NED University's ranking in Pakistan?",
+    "gold_snippet": null,
+    "type": "out_of_scope"
+  },
+  {
+    "id": "q28",
+    "question": "What is the weather in Karachi today?",
+    "gold_snippet": null,
+    "type": "out_of_scope"
+  }
+]

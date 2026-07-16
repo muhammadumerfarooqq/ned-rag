@@ -19,10 +19,13 @@ def retrieve(question: str, k: int = 3):
     frequently ranks 2nd, not 1st.
     """
     results = _collection.query(query_texts=[question], n_results=k)
+    ids = results["ids"][0]
     docs = results["documents"][0]
     dists = results["distances"][0]
-    return [{"text": d, "distance": dist} for d, dist in zip(docs, dists)]
-
+    return [
+        {"id": i, "text": d, "distance": dist}
+        for i, d, dist in zip(ids, docs, dists)
+    ]
 
 if __name__ == "__main__":
     # Self-test when run directly
