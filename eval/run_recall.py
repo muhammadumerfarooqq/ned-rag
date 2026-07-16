@@ -1,11 +1,13 @@
 import wandb
 import json, re, sys
 sys.path.insert(0, "src")
-from chunker import load_and_chunk
+from chunker import load_and_chunk, CHUNK_SIZE, CHUNK_OVERLAP, SEPARATORS
 from retriever import retrieve
+
 
 def norm(s):
     return re.sub(r"\s+", " ", s).strip().lower()
+
 
 chunks = load_and_chunk("data/regulations_4155.pdf")
 normed = [norm(c) for c in chunks]
@@ -34,15 +36,17 @@ for k in [1, 3, 5, 10]:
     print(f"recall@{k} = {score}/{len(in_scope)} = {results[k]:.3f}")
 
 print("\n=== SUMMARY ===")
+print(f"chunks: {len(chunks)}  size={CHUNK_SIZE}  overlap={CHUNK_OVERLAP}")
 for k, r in results.items():
     print(f"recall@{k} = {r:.3f}")
 
 run = wandb.init(
-    
     project="ned-rag-eval",
     config={
-        "chunk_size": 1000,
-        "chunk_overlap": 150,
+        "chunk_size": CHUNK_SIZE,
+        "chunk_overlap": CHUNK_OVERLAP,
+        "separators": str(SEPARATORS),
+        "n_chunks": len(chunks),
         "embed_model": "all-MiniLM-L6-v2",
         "k_values": [1, 3, 5, 10],
     },

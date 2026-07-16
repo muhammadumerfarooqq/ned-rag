@@ -25,7 +25,7 @@ with open("eval/questions.json", encoding="utf-8") as f:
 in_scope = [q for q in questions if q["type"] == "in_scope"]
 out_scope = [q for q in questions if q["type"] == "out_of_scope"]
 
-K = 3
+K = 5
 
 REFUSAL = "i don't know"
 

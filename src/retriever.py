@@ -11,12 +11,17 @@ _collection = _client.get_collection(
 )
 
 
-def retrieve(question: str, k: int = 3):
+def retrieve(question: str, k: int = 5):
     """Return the top-k most relevant chunks for a question.
 
-    Returns a list of dicts: [{"text": ..., "distance": ...}, ...]
-    k=3 chosen because retrieval tests showed the answer-bearing chunk
-    frequently ranks 2nd, not 1st.
+    Returns a list of dicts: [{"id": ..., "text": ..., "distance": ...}, ...]
+
+    k=5 selected in Phase 10 by measurement, not intuition. With clause-aware
+    chunking (47 chunks), recall@5 = 1.000 — every gold chunk is retrieved for
+    every question in the eval set. k=3 gives recall@3 = 0.826 and starves the
+    model of context (answer_rate 0.826 vs 0.913 at k=5).
+
+    See eval/ and the W&B dashboard for the full ablation.
     """
     results = _collection.query(query_texts=[question], n_results=k)
     ids = results["ids"][0]
@@ -27,8 +32,9 @@ def retrieve(question: str, k: int = 3):
         for i, d, dist in zip(ids, docs, dists)
     ]
 
+
 if __name__ == "__main__":
     # Self-test when run directly
     hits = retrieve("What attendance do I need to sit an exam?")
-    print(f"Retrieved {len(hits)} chunks. Closest distance: {hits[0]['distance']:.3f}")
+    print(f"Retrieved {len(hits)} chunks. Closest: {hits[0]['id']} @ {hits[0]['distance']:.3f}")
     print(f"Preview: {hits[0]['text'][:120]}...")
