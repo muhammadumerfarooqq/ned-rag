@@ -4,8 +4,11 @@ from gpa import calculate_gpa
 
 
 # ============================================================
-#  LOGIC — do not edit when restyling
+#  LOGIC
 # ============================================================
+EMPTY_ANSWER = "*Ask a question to receive a cited regulation…*"
+
+
 def ask(question):
     if not question or len(question.strip()) < 3:
         return "Please enter a real question (at least a few characters)."
@@ -13,6 +16,10 @@ def ask(question):
         return answer(question.strip())
     except Exception:
         return "Something went wrong while processing your question. Please try again."
+
+
+def thinking():
+    return "<div class='dots'><span></span><span></span><span></span></div>"
 
 
 EXAMPLE_ROWS = [
@@ -72,21 +79,13 @@ def compute_gpa(table):
 
 
 def show_qa():
-    return (
-        gr.update(visible=True),
-        gr.update(visible=False),
-        gr.update(variant="primary"),
-        gr.update(variant="secondary"),
-    )
+    return (gr.update(visible=True), gr.update(visible=False),
+            gr.update(variant="primary"), gr.update(variant="secondary"))
 
 
 def show_gpa():
-    return (
-        gr.update(visible=False),
-        gr.update(visible=True),
-        gr.update(variant="secondary"),
-        gr.update(variant="primary"),
-    )
+    return (gr.update(visible=False), gr.update(visible=True),
+            gr.update(variant="secondary"), gr.update(variant="primary"))
 
 
 # ============================================================
@@ -102,23 +101,20 @@ CSS = f"""
     font-family: 'Inter', system-ui, 'Segoe UI Emoji', 'Apple Color Emoji',
                  'Noto Color Emoji', sans-serif !important;
 }}
-
-html, body, gradio-app, #root, .app, .main, .contain {{
-    background: #000000 !important;
-}}
+html, body, gradio-app, #root, .app, .main, .contain {{ background: #000000 !important; }}
 
 .gradio-container {{
-    max-width: 860px !important;
+    max-width: 820px !important;
     margin: 0 auto !important;
-    padding: 0 24px !important;
+    padding: 0 40px !important;
     background: #000000 !important;
-    color: #E8E8ED !important;
+    color: #E0E0E0 !important;
 }}
 footer {{ display: none !important; }}
-
 h1, h2, h3, h4 {{ text-transform: none !important; }}
 
-#app-header {{ text-align: center; padding: 34px 0 6px 0; }}
+/* ---------- HEADER ---------- */
+#app-header {{ text-align: center; padding: 40px 0 8px 0; }}
 #app-header h1 {{
     font-size: 30px; font-weight: 800; letter-spacing: 3px;
     text-transform: uppercase !important; margin: 0;
@@ -126,103 +122,98 @@ h1, h2, h3, h4 {{ text-transform: none !important; }}
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
 }}
-#app-header p {{ color: #5A5A64; font-size: 13px; margin: 10px 0 0 0; }}
+#app-header p {{ color: #5A5A64; font-size: 13px; margin: 12px 0 0 0; }}
 
 /* ---------- NAV ---------- */
 #nav-bar {{
     justify-content: center; gap: 14px;
     border-bottom: 1px solid #1C1C22;
-    padding-bottom: 18px; margin-bottom: 30px;
+    padding-bottom: 18px; margin-bottom: 36px;
 }}
 #nav-bar button {{
-    background: transparent !important; border: none !important;
-    box-shadow: none !important;
+    background: transparent !important; border: none !important; box-shadow: none !important;
     font-size: 14px !important; font-weight: 700 !important;
     letter-spacing: 1.4px !important; text-transform: uppercase !important;
-    padding: 10px 22px !important; max-width: 240px;
-    transition: color 0.15s ease;
+    padding: 10px 22px !important; max-width: 240px; transition: color 0.15s ease;
 }}
 #nav-bar button.secondary {{ color: #4A4A54 !important; }}
 #nav-bar button.secondary:hover {{ color: #8A8A96 !important; }}
 #nav-bar button.primary {{
     color: {MAGENTA} !important;
     text-shadow: 0 0 18px rgba(255, 46, 159, 0.45);
-    border-bottom: 2px solid {MAGENTA} !important;
-    border-radius: 0 !important;
+    border-bottom: 2px solid {MAGENTA} !important; border-radius: 0 !important;
 }}
 
 /* ---------- TEXT ---------- */
 #qa-subtitle b, #qa-subtitle strong,
 #gpa-subtitle b, #gpa-subtitle strong,
-#gpa-notes b, #gpa-notes strong {{
-    color: inherit !important; font-weight: 700 !important;
-}}
+#gpa-notes b, #gpa-notes strong {{ color: inherit !important; font-weight: 700 !important; }}
 #qa-subtitle, #gpa-subtitle {{
     color: #6E6E78 !important; font-size: 15px !important; line-height: 1.7;
+    margin-bottom: 34px !important;
 }}
 #gpa-subtitle h3 {{
-    color: #E8E8ED !important; font-size: 20px !important;
-    font-weight: 600 !important; text-transform: none !important;
+    color: #E0E0E0 !important; font-size: 21px !important;
+    font-weight: 700 !important; margin-bottom: 14px !important;
 }}
-
-/* notes: one per line */
-#gpa-notes {{ color: #5A5A64 !important; font-size: 13px !important; }}
-#gpa-notes ul {{ margin: 8px 0 0 0; padding-left: 18px; }}
-#gpa-notes li {{ margin-bottom: 9px; line-height: 1.6; }}
+#gpa-notes {{ color: #5A5A64 !important; font-size: 13px !important; margin-top: 40px !important; }}
+#gpa-notes ul {{ margin: 10px 0 0 0; padding-left: 18px; }}
+#gpa-notes li {{ margin-bottom: 10px; line-height: 1.65; }}
 #gpa-notes h4 {{
     color: #7A7A86 !important; font-size: 12px !important;
     letter-spacing: 1px; text-transform: uppercase !important;
-    margin: 0 0 4px 0; font-weight: 700 !important;
+    margin: 0 0 6px 0; font-weight: 700 !important;
 }}
 
 /* ---------- FIELD LABELS ---------- */
 #question-label, #answer-label {{
-    color: #C8C8D2 !important;
-    font-size: 12px !important; font-weight: 700 !important;
+    color: #C8C8D2 !important; font-size: 12px !important; font-weight: 700 !important;
     letter-spacing: 1.6px !important; text-transform: uppercase !important;
-    margin: 0 0 8px 4px !important;
+    margin: 0 0 14px 4px !important;
 }}
-#answer-label {{ margin-top: 22px !important; }}
+#answer-label {{ margin-top: 40px !important; }}
 
 /* ---------- BUTTONS ---------- */
 .grad-btn {{
     background: linear-gradient(90deg, {MAGENTA} 0%, {PURPLE} 100%) !important;
     border: none !important; border-radius: 40px !important;
     color: #FFFFFF !important; font-weight: 600 !important;
-    font-size: 15px !important; padding: 15px 0 !important;
+    font-size: 15px !important; padding: 18px 0 !important;
+    margin-top: 18px !important;
     box-shadow: 0 4px 24px rgba(255, 46, 159, 0.20) !important;
 }}
 .grad-btn:hover {{ filter: brightness(1.12); }}
 
 .ghost-btn {{
-    background: transparent !important;
-    border: 1px solid {MAGENTA} !important;
-    border-radius: 40px !important;
-    color: {MAGENTA} !important;
+    background: transparent !important; border: 1px solid {MAGENTA} !important;
+    border-radius: 40px !important; color: {MAGENTA} !important;
     font-weight: 500 !important; font-size: 13px !important;
-    padding: 10px 0 !important; box-shadow: none !important;
+    padding: 11px 0 !important; box-shadow: none !important;
 }}
 .ghost-btn:hover {{ background: rgba(255, 46, 159, 0.08) !important; }}
 
-/* ---------- INPUT ---------- */
-.sleek-input, .sleek-input > .block {{
-    background: transparent !important; border: none !important; box-shadow: none !important;
+/* ---------- INPUT: kill the gray container ---------- */
+.sleek-input, .sleek-input > div, .sleek-input .block, .sleek-input .form,
+.sleek-input .wrap, .sleek-input .container {{
+    background: transparent !important; border: none !important;
+    box-shadow: none !important; padding: 0 !important;
 }}
+.sleek-input label {{
+    background: transparent !important; border: none !important;
+    display: block !important; padding: 0 !important;
+}}
+.sleek-input label > span {{ display: none !important; }}
 .sleek-input textarea, .sleek-input input {{
-    background: #0B0B0F !important; border: 1px solid #1E1E26 !important;
-    border-radius: 24px !important; color: #E8E8ED !important;
-    padding: 18px 22px !important; font-size: 16px !important; line-height: 1.6 !important;
+    background: #08080C !important;
+    border: 1px solid #1A1A22 !important;
+    border-radius: 24px !important; color: #E0E0E0 !important;
+    padding: 20px 24px !important; font-size: 16px !important; line-height: 1.6 !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }}
 .sleek-input textarea:focus, .sleek-input input:focus {{
     border-color: {MAGENTA} !important;
-    box-shadow: 0 0 0 3px rgba(255, 46, 159, 0.15) !important; outline: none !important;
+    box-shadow: 0 0 0 3px rgba(255, 46, 159, 0.14) !important; outline: none !important;
 }}
-.sleek-input label {{
-    background: transparent !important;
-    border: none !important;
-    display: block !important;
-}}
-.sleek-input label > span {{ display: none !important; }}
 
 /* ---------- ANSWER ---------- */
 #answer-bubble {{
@@ -230,18 +221,33 @@ h1, h2, h3, h4 {{ text-transform: none !important; }}
     background:
         linear-gradient(#08080C, #08080C) padding-box,
         linear-gradient(120deg, {MAGENTA}, {PURPLE}) border-box !important;
-    padding: 24px 28px !important; min-height: 80px;
+    padding: 26px 30px !important; min-height: 84px;
 }}
 #answer-bubble p, #answer-bubble li {{
     color: #D8D8E0 !important; font-size: 15px !important; line-height: 1.75 !important;
 }}
+#answer-bubble em {{ color: #45454E !important; }}
 #answer-bubble ul {{ margin: 4px 0 0 0; padding-left: 20px; }}
 #answer-bubble li {{ margin-bottom: 12px; }}
 #answer-bubble strong {{ color: {MAGENTA} !important; }}
 
+/* loading dots */
+.dots {{ display: flex; gap: 7px; align-items: center; padding: 6px 0; }}
+.dots span {{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: {MAGENTA}; opacity: 0.3;
+    animation: pulse 1.3s infinite ease-in-out;
+}}
+.dots span:nth-child(2) {{ animation-delay: 0.18s; }}
+.dots span:nth-child(3) {{ animation-delay: 0.36s; }}
+@keyframes pulse {{
+    0%, 80%, 100% {{ opacity: 0.25; transform: scale(0.85); }}
+    40% {{ opacity: 1; transform: scale(1.1); }}
+}}
+
 /* ---------- EXAMPLES ---------- */
 .gradio-container .examples button, .gradio-container button.example {{
-    background: #0B0B0F !important; border: 1px solid #22222B !important;
+    background: #08080C !important; border: 1px solid #1E1E26 !important;
     border-radius: 40px !important; color: #8A8A96 !important;
     font-size: 13px !important; padding: 10px 18px !important;
 }}
@@ -260,47 +266,43 @@ h1, h2, h3, h4 {{ text-transform: none !important; }}
     width: 100%; font-size: 13px !important;
 }}
 #worked-example table td, #worked-example table th {{
-    white-space: nowrap !important; padding: 9px 13px !important;
+    white-space: nowrap !important; padding: 11px 14px !important;
 }}
-#worked-example h3 {{
-    font-size: 20px !important; color: {MAGENTA} !important; text-transform: none !important;
-}}
+#worked-example h3 {{ font-size: 20px !important; color: {MAGENTA} !important; }}
 
-/* ---------- TABLES ---------- */
+/* ---------- TABLES: floating, hairline separators, no outer border ---------- */
 .gradio-container table {{
-    background: transparent !important; border: none !important; border-collapse: collapse !important;
+    background: transparent !important; border: none !important;
+    border-collapse: collapse !important; box-shadow: none !important;
 }}
 .gradio-container table thead th {{
     background: transparent !important; border: none !important;
     border-bottom: 1px solid #22222B !important; color: #5A5A64 !important;
-    font-size: 11px !important; font-weight: 600 !important;
-    letter-spacing: 0.7px; text-transform: uppercase; padding: 13px 14px !important;
+    font-size: 11px !important; font-weight: 700 !important;
+    letter-spacing: 0.8px; text-transform: uppercase; padding: 15px 16px !important;
 }}
 .gradio-container table tbody td {{
     background: transparent !important; border: none !important;
-    border-bottom: 1px solid #131318 !important; color: #C8C8D2 !important;
-    font-size: 14px !important; padding: 14px !important;
+    border-bottom: 1px solid #121218 !important; color: #C8C8D2 !important;
+    font-size: 14px !important; padding: 16px !important;
 }}
-.gradio-container table tbody tr:hover td {{ background: #0A0A0E !important; }}
+.gradio-container table tbody tr:last-child td {{ border-bottom: none !important; }}
+.gradio-container table tbody tr:hover td {{ background: #09090D !important; }}
 .wrap.svelte-1cl284s, .block {{ background: transparent !important; border: none !important; }}
 
 #gpa-summary h2 {{
     background: linear-gradient(90deg, {MAGENTA} 0%, {PURPLE} 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; font-size: 32px !important; text-transform: none !important;
+    background-clip: text; font-size: 32px !important; margin-top: 26px !important;
 }}
 #gpa-summary p {{ font-size: 14px !important; color: #8A8A96 !important; }}
 
 /* ---------- CREDIT ---------- */
 #credit {{
     text-align: center; color: #7A7A86; font-size: 14px;
-    padding: 34px 0 26px 0; border-top: 1px solid #1C1C22; margin-top: 44px;
+    padding: 38px 0 30px 0; border-top: 1px solid #1C1C22; margin-top: 56px;
 }}
-#credit a {{
-    text-decoration: none !important;
-    color: #7A7A86 !important;
-    transition: opacity 0.15s ease;
-}}
+#credit a {{ text-decoration: none !important; color: #7A7A86 !important; transition: opacity 0.15s ease; }}
 #credit a:hover {{ opacity: 0.75; }}
 #credit a:hover b {{ text-shadow: 0 0 22px rgba(255, 46, 159, 0.6); }}
 #credit b {{
@@ -311,11 +313,11 @@ h1, h2, h3, h4 {{ text-transform: none !important; }}
 #credit span {{ color: #4A4A54; font-size: 12px; }}
 
 @media (max-width: 640px) {{
-    .gradio-container {{ padding: 0 14px !important; }}
+    .gradio-container {{ padding: 0 18px !important; }}
     #app-header h1 {{ font-size: 20px; letter-spacing: 1.5px; }}
     #nav-bar button {{ font-size: 12px !important; padding: 9px 8px !important; letter-spacing: 0.8px !important; }}
     #answer-bubble p, #answer-bubble li {{ font-size: 14px !important; }}
-    .gradio-container table tbody td {{ font-size: 13px !important; padding: 11px !important; }}
+    .gradio-container table tbody td {{ font-size: 13px !important; padding: 12px !important; }}
 }}
 """
 
@@ -344,7 +346,7 @@ with gr.Blocks(title="NED Regulations Assistant") as demo:
     )
 
     with gr.Row(elem_id="nav-bar"):
-        nav_qa = gr.Button("Ask the Regulation", variant="primary")
+        nav_qa = gr.Button("Ask the question", variant="primary")
         nav_gpa = gr.Button("GPA calculator", variant="secondary")
 
     # ---------- PANEL 1 ----------
@@ -357,19 +359,21 @@ with gr.Blocks(title="NED Regulations Assistant") as demo:
 
         gr.Markdown("Your Question", elem_id="question-label")
         question_box = gr.Textbox(
-            label="",
-            show_label=False,
+            label="", show_label=False,
             placeholder="What attendance do I need to sit an exam?",
-            lines=2,
-            elem_classes="sleek-input",
+            lines=2, elem_classes="sleek-input",
         )
         ask_button = gr.Button("Ask", elem_classes="grad-btn")
 
         gr.Markdown("Your Answer", elem_id="answer-label")
-        answer_box = gr.Markdown(elem_id="answer-bubble")
+        answer_box = gr.Markdown(EMPTY_ANSWER, elem_id="answer-bubble")
 
-        ask_button.click(fn=ask, inputs=question_box, outputs=answer_box)
-        question_box.submit(fn=ask, inputs=question_box, outputs=answer_box)
+        ask_button.click(fn=thinking, outputs=answer_box).then(
+            fn=ask, inputs=question_box, outputs=answer_box
+        )
+        question_box.submit(fn=thinking, outputs=answer_box).then(
+            fn=ask, inputs=question_box, outputs=answer_box
+        )
 
         gr.Examples(
             examples=[
@@ -412,8 +416,7 @@ with gr.Blocks(title="NED Regulations Assistant") as demo:
         course_table = gr.Dataframe(
             headers=["Course name", "Total marks", "Obtained marks", "Credit hours"],
             datatype=["str", "number", "number", "number"],
-            row_count=(1, "dynamic"),
-            column_count=(4, "fixed"),
+            row_count=(1, "dynamic"), column_count=(4, "fixed"),
             value=[["", None, None, None]],
             label="Your courses — click + below the table to add rows",
         )
@@ -422,8 +425,7 @@ with gr.Blocks(title="NED Regulations Assistant") as demo:
         gpa_summary = gr.Markdown(elem_id="gpa-summary")
         result_table = gr.Dataframe(
             headers=["Course", "Total", "Obtained", "%", "Grade", "Grade point", "Credit hrs", "Points earned"],
-            label="Breakdown",
-            interactive=False,
+            label="Breakdown", interactive=False,
         )
 
         example_button.click(fn=load_example, outputs=course_table)
